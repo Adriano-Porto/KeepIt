@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:dev.db"
+}
+
+model User {
+  id String @id @default(uuid())
+  name String
+  email String
+
+  decks Deck[]
+  cards Card[]
+  attempts Attempt[]
+
+  @@map("users")
+}
+
+model Deck {
+  id String @id @default(uuid())
+  qnt_cards Int
+  name String
+
+  user User @relation(fields: [user_id], references: [id])
+  user_id String
+
+  cards Card[]
+  attempts Attempt[]
+
+  @@map("decks")
+}
+
+model Card {
+  id String @id @default(uuid())
+  title String
+  question String
+  answer String
+  current_state Int
+  last_time DateTime
+  next_time DateTime
+  created_at DateTime @default(now())
+
+  user User @relation(fields: [user_id], references: [id])
+  user_id String
+
+  deck Deck @relation(fields: [deck_id], references: [id])
+  deck_id String
+
+  attempts Attempt[]
+  @@map("cards")
+}
+
+model Attempt {
+  id String @id @default(uuid())
+  correct Boolean
+  created_at DateTime @default(now())
+
+  user User @relation(fields: [user_id], references: [id])
+  user_id String
+
+  deck Deck @relation(fields: [deck_id], references: [id])
+  deck_id String
+
+  card Card @relation(fields: [card_id], references: [id])
+  card_id String
+
+  @@map("attempts")
+}
