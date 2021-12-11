@@ -1,4 +1,5 @@
 import prismaClient from '../prisma'
+import { ValidationError } from '../errors/ValidationError'
 
 type AttemptProps = {
     correct: boolean
@@ -14,19 +15,19 @@ class AttemptService {
             where: {id: user_id}
         })
         if(!userExists) {
-            throw new Error("User does not exist")
+            throw new ValidationError("User does not exist")
         }
         const deckExists = await prismaClient.deck.findFirst({
             where: {id: deck_id}
         })
         if(!deckExists) {
-            throw new Error("Deck does not Exist")
+            throw new ValidationError("Deck does not Exist")
         }
         const cardExists = await prismaClient.card.findFirst({
             where: {id: card_id}
         })
         if(!cardExists) {
-            throw new Error("Card does not Exist")
+            throw new ValidationError("Card does not Exist")
         }
 
         const attemptObj = { data: { correct, card_id, deck_id, user_id }}

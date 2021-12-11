@@ -7,12 +7,8 @@ class CardController {
 
         const cardService = new CardService()
 
-        try {
-            const card = await cardService.create({title, question, answer, user_id, deck_id})
-            return res.json({ card })
-        } catch (err) {
-            return res.json(err)
-        }
+        const card = await cardService.create({title, question, answer, user_id, deck_id})
+        return res.json( card )
     }
 }
 

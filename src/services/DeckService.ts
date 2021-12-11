@@ -1,5 +1,5 @@
 import prismaClient from '../prisma'
-
+import { ValidationError } from '../errors/ValidationError'
 type DeckProps = {
     name: string;
     user_id: string
@@ -12,7 +12,7 @@ class DeckService {
         })
 
         if(!userExists)  {
-            throw new Error("User does not exists")
+            throw new ValidationError("User does not exists")
         }
 
         const deckObj = { data: { name, user_id, qnt_cards: 0 }}

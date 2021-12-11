@@ -1,5 +1,5 @@
 import prismaClient from '../prisma'
-
+import { ValidationError } from '../errors/ValidationError'
 type CardProps = {
     title: string
     question: string
@@ -21,13 +21,13 @@ class CardService {
             where: {id: user_id}
         })
         if(!userExists) {
-            throw new Error("User does not exist")
+            throw new ValidationError("User does not exist")
         }
         const deckExists = await prismaClient.deck.findFirst({
             where: {id: deck_id}
         })
         if(!deckExists) {
-            throw new Error("Deck does not Exist")
+            throw new ValidationError("Deck does not Exist")
         }
 
         const current_state = 0
