@@ -24,7 +24,6 @@ model User {
 
 model Deck {
   id String @id @default(uuid())
-  qnt_cards Int
   name String
 
   user User @relation(fields: [user_id], references: [id])

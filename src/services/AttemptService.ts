@@ -1,5 +1,6 @@
 import prismaClient from '../prisma'
 import { ValidationError } from '../errors/ValidationError'
+import { searchOnDatabase } from '../utils/PrismaServiceUtils'
 
 type AttemptProps = {
     correct: boolean
@@ -11,15 +12,11 @@ type AttemptProps = {
 class AttemptService {
     async create({correct, card_id, deck_id, user_id}: AttemptProps) {
         
-        const userExists = await prismaClient.user.findFirst({
-            where: {id: user_id}
-        })
+        const userExists = await searchOnDatabase(user_id, 'user')
         if(!userExists) {
             throw new ValidationError("User does not exist")
         }
-        const deckExists = await prismaClient.deck.findFirst({
-            where: {id: deck_id}
-        })
+        const deckExists = await searchOnDatabase(deck_id, 'deck')
         if(!deckExists) {
             throw new ValidationError("Deck does not Exist")
         }

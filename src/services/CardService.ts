@@ -1,5 +1,6 @@
 import prismaClient from '../prisma'
 import { ValidationError } from '../errors/ValidationError'
+import { searchOnDatabase } from '../utils/PrismaServiceUtils'
 type CardProps = {
     title: string
     question: string
@@ -17,15 +18,11 @@ class CardService {
         deck_id
     }: CardProps) {
         
-        const userExists = await prismaClient.user.findFirst({
-            where: {id: user_id}
-        })
+        const userExists = await searchOnDatabase(user_id, 'user')
         if(!userExists) {
             throw new ValidationError("User does not exist")
         }
-        const deckExists = await prismaClient.deck.findFirst({
-            where: {id: deck_id}
-        })
+        const deckExists = await searchOnDatabase(deck_id, 'deck')
         if(!deckExists) {
             throw new ValidationError("Deck does not Exist")
         }
@@ -37,16 +34,18 @@ class CardService {
 
         
 
-        const cardObj = {data: {
-            title,
-            question,
-            answer,
-            current_state,
-            last_time,
-            next_time,
-            user_id,
-            deck_id,
-        }}
+        const cardObj = {
+            data: {
+                title,
+                question,
+                answer,
+                current_state,
+                last_time,
+                next_time,
+                user_id,
+                deck_id,
+            }
+        }
         const card = await prismaClient.card.create(cardObj)
 
         return card

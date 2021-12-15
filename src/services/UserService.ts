@@ -1,5 +1,6 @@
 import prismaClient from '../prisma'
 import { ValidationError } from '../errors/ValidationError'
+import { searchOnDatabase } from '../utils/PrismaServiceUtils'
 
 type UserProps = {
     name: string;
@@ -8,10 +9,7 @@ type UserProps = {
 
 class UserService {
     async create({name, email}: UserProps) {
-        
-        const userExists = await prismaClient.user.findFirst({
-            where: { email }
-        })
+        const userExists = await searchOnDatabase(email, 'user', 'email')
 
         if(userExists){
             throw new ValidationError("User Already Exists on the Database")
