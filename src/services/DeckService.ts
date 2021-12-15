@@ -20,6 +20,15 @@ class DeckService {
         const deck = await prismaClient.deck.create(deckObj)
         return deck
     }
+    async listAll (id: string) {
+        const user = await prismaClient.user.findFirst({
+            where: { id }, include: { decks: true }
+        })
+        if(!user){
+            throw new ValidationError("User does not exist")
+        }
+        return user.decks
+    }
 }
 
 export { DeckService}
