@@ -60,8 +60,6 @@ class AttemptService {
             card.next_time = new Date(0)
         }
 
-        console.log({next_time: card.next_time})
-
         const updatedCard = await prismaClient.card.update({
             where: {
                 id: card.id,
