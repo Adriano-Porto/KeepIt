@@ -10,6 +10,12 @@ class CardController {
         const card = await cardService.create({title, question, answer, user_id, deck_id})
         return res.json( card )
     }
+    async listByDeck(req: Request, res: Response) {
+        const { id } = req.body
+        const cardService = new CardService()
+        const allCards = await cardService.listByDeck(id)
+        return res.json(allCards)
+    }
 }
 
 export { CardController }

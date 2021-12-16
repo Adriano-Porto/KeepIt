@@ -20,7 +20,7 @@ class DeckService {
         const deck = await prismaClient.deck.create(deckObj)
         return deck
     }
-    async listAll (id: string) {
+    async listByUser (id: string) {
         const user = await prismaClient.user.findFirst({
             where: { id }, include: { decks: true }
         })

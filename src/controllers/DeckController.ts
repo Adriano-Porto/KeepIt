@@ -7,10 +7,10 @@ class DeckController {
         const deck = await deckService.create({name, user_id})
         return res.json(deck)
     }
-    async getAll(req: Request, res: Response) {
+    async listByUser(req: Request, res: Response) { // Retorna todos os Decks de um Usuário
         const deckService = new DeckService()
         const { id } = req.body
-        const listOfDecks = await deckService.listAll(id)
+        const listOfDecks = await deckService.listByUser(id)
         return res.json(listOfDecks)
     }
 }

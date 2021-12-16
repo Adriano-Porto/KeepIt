@@ -16,5 +16,6 @@ router.post('/create/deck', deckController.handle)
 router.post('/create/card', cardController.handle)
 router.post('/create/attempt', attemptController.handle)
 
-router.post('/decks', deckController.getAll)
+router.post('/decks', deckController.listByUser)
+router.post('/cards', cardController.listByDeck)
 export { router }
