@@ -47,7 +47,7 @@ class CardService {
     }
     async listByDeck(id: string) {
         const deck = await prismaClient.deck.findFirst({
-            where: {id}, include: { cards: true }
+            where: { id }, include: { cards: true }
         })
         if(!deck) throw new ValidationError("Deck does not Exist")
         return deck.cards

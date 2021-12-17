@@ -18,4 +18,10 @@ router.post('/create/attempt', attemptController.handle)
 
 router.post('/decks', deckController.listByUser)
 router.post('/cards', cardController.listByDeck)
+
+// creating 3 different routes is much simpler than creating one that handle all attempt's requests
+router.post('/attempts', attemptController.list)
+router.post('/attempts/deck', attemptController.listByDeck)
+router.post('/attempts/date', attemptController.listByDate)
+
 export { router }

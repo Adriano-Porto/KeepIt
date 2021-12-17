@@ -1,10 +1,21 @@
 import prismaClient from "../prisma"
 
-type database = 'user' | 'deck' | 'card' | 'attempt'
-
-export async function  searchOnDatabase (identifier: string, databaseName: string, rowToSearch: string = 'id') {
-    const data = await prismaClient[databaseName].findFirst({
-        where: { [rowToSearch]: identifier },
-    })
-    return data
+export async function  searchOnDatabase (
+    identifier: string,
+    databaseName: string,
+    rowToSearch: string = 'id',
+    many: boolean = false
+    ) {
+        if(identifier === undefined || identifier === null) throw new Error("Searching Invalid Value on the Database")
+    if(!many) {
+        const data = await prismaClient[databaseName].findFirst({
+            where: { [rowToSearch]: identifier },
+        })
+        return data
+    } else {
+        const data = await prismaClient[databaseName].findMany({
+            where: { [rowToSearch]: identifier },
+        })
+        return data
+    }
 }
