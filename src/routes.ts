@@ -11,10 +11,14 @@ const attemptController = new AttemptController()
 
 const router = Router()
 
-router.post('/create/user', userController.handle)
-router.post('/create/deck', deckController.handle)
-router.post('/create/card', cardController.handle)
-router.post('/create/attempt', attemptController.handle)
+const createRouter = Router()
+
+router.use('/create', createRouter)
+    createRouter.post('/user', userController.handle)
+    createRouter.post('/deck', deckController.handle)
+    createRouter.post('/card', cardController.handle)
+    createRouter.post('/attempt', attemptController.handle)
+
 
 router.post('/decks', deckController.listByUser)
 router.post('/cards', cardController.listByDeck)
