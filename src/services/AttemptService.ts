@@ -104,6 +104,17 @@ class AttemptService {
         })
         return attempts
     }
+
+    async getResults (user_id: string) {
+        const attempts = await searchOnDatabase(user_id, 'attempt', 'user_id', true)
+        const totalAttempts = attempts.length
+        let correctAttempts = 0
+        attempts.forEach((val) => {
+            if(val.correct) correctAttempts += 1
+        }) // get the number of correct answers from the user
+
+        return { totalAttempts, correctAttempts }
+    }
 }
 
 export { AttemptService }

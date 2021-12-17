@@ -35,6 +35,14 @@ class AttemptController {
         const attempts = await attemptService.listByDate(user_id, String(ini), String(end))
         return res.json(attempts)
     }
+
+    async results(req: Request, res: Response) {
+        const { user_id } = req.body
+
+        const attemptService = new AttemptService()
+        const result = await attemptService.getResults(user_id) // return the total of attempts and how many were correct
+        return res.json(result)
+    }
 }
 
 export { AttemptController }

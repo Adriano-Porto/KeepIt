@@ -27,5 +27,5 @@ router.post('/cards', cardController.listByDeck)
 router.post('/attempts', attemptController.list)
 router.post('/attempts/deck', attemptController.listByDeck)
 router.post('/attempts/date', attemptController.listByDate)
-
+router.post('/attempts/results', attemptController.results)
 export { router }
