@@ -16,6 +16,13 @@ class CardController {
         const allCards = await cardService.listByDeck(id)
         return res.json(allCards)
     }
+
+    async listNextCards(req: Request, res: Response) {
+        const { id } = req.body
+        const cardService = new CardService()
+        const nextCards = await cardService.listNextCards(id)
+        return res.json(nextCards)
+    }
 }
 
 export { CardController }
